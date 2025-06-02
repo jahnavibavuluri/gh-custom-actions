@@ -10,9 +10,12 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: load & cache dependencies
+        id: cache-step
         uses: ./.github/actions/cached-deps
         with:
           caching: 'false' # this would disable the caching step for this job
+      - name: output info
+        run: echo "cache used? ${{ steps.cache-step.output.used-cache }}"
       - name: Lint code
         run: npm run lint
   test:
